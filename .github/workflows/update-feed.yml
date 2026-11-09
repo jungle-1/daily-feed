@@ -1,0 +1,38 @@
+name: 每日更新资讯
+
+on:
+  schedule:
+    # UTC 23:10 = 北京时间 07:10，赶在 App 每日 08:10 同步前完成
+    - cron: "10 23 * * *"
+  workflow_dispatch: {}   # 允许在 Actions 页手动点 Run 立即更新
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 安装依赖
+        run: pip install feedparser requests
+
+      - name: 抓取并生成 feed.json
+        run: python generate_feed.py
+
+      - name: 提交更新
+        run: |
+          git config user.name "feed-bot"
+          git config user.email "feed-bot@users.noreply.github.com"
+          git add feed.json
+          if git diff --cached --quiet; then
+            echo "内容无变化，跳过提交"
+          else
+            git commit -m "chore: 每日资讯更新 $(date +%F)"
+            git push
+          fi
