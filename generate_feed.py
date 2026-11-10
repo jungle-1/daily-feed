@@ -32,18 +32,15 @@ NEED_CN = 4
 
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) feed-bot/1.0"
 
-# (RSS 地址, 归类地区, 来源名)。国内新闻用新加坡联合早报中国频道 + 中新网，
+# (RSS 地址, 归类地区, 来源名)。国内新闻用中新网；国际用多家海外中文媒体，
 # 均对海外（GitHub Actions 运行环境）访问友好；个别源失效不影响整体。
+# 注：联合早报的 /rss/realtime/* 已失效（返回 HTML 页面、无 RSS 条目），已移除。
 SOURCES = [
-    ("https://www.zaobao.com.sg/rss/realtime/world", "国际", "联合早报"),
-    ("https://www.zaobao.com/rss/realtime/world", "国际", "联合早报"),
     ("https://feeds.bbci.co.uk/zhongwen/simp/rss.xml", "国际", "BBC中文"),
     ("https://www.rfi.fr/cn/rss", "国际", "RFI"),
     ("https://www.ftchinese.com/rss/news", "国际", "FT中文网"),
     ("https://rss.dw.com/rdf/rss-chi-all", "国际", "DW中文"),
     ("https://cn.nytimes.com/rss/", "国际", "纽约时报中文"),
-    ("https://www.zaobao.com.sg/rss/realtime/china", "国内", "联合早报"),
-    ("https://www.zaobao.com/rss/realtime/china", "国内", "联合早报"),
     ("http://www.chinanews.com.cn/rss/scroll-news.xml", "国内", "中新网"),
 ]
 
